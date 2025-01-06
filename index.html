@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Live Cricket Updates</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
@@ -13,7 +13,7 @@
 
   <!-- Live Scores Section -->
   <section id="live-scores-section">
-    <h2>Live Match Updates</h2>
+    <h2>Live Scores</h2>
     <div id="liveScores">Loading Live Scores...</div>
   </section>
 
@@ -21,11 +21,25 @@
   <section id="upcoming-matches-section">
     <h2>Upcoming Matches</h2>
     <div id="upcomingMatches">Loading Upcoming Matches...</div>
-  </section>
+  </section> 
 
-  <footer>
-    <p>CRICKET UPDATE</p>
-  </footer>
+  <!-- Bowler Card Section -->
+  <section id="bowler-card-section">
+    <div class="bowler-card">
+      <div class="bowler-info">
+        <span id="bowler-name">Sandeep Lamichhane</span>
+        <span id="bowler-stats">2-21 (4)</span>
+      </div>
+      <div class="bowler-overs">
+        <div class="over-ball completed"></div>
+        <div class="over-ball completed"></div>
+        <div class="over-ball completed"></div>
+        <div class="over-ball pending"></div>
+        <div class="over-ball pending"></div>
+        <div class="over-ball pending"></div>
+      </div>
+    </div>
+  </section>
 
   <script src="script.js"></script>
 </body>
