@@ -30,7 +30,7 @@ h2 {
   text-align: center;
 }
 
-/* Live Scores & Upcoming Matches Sections */
+/* Sections */
 section {
   margin: 20px auto;
   max-width: 900px;
@@ -72,6 +72,44 @@ tr:hover {
   background-color: #e6f7ff;
 }
 
+/* Bowler Card */
+.bowler-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #00509E;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.bowler-info {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.bowler-overs {
+  display: flex;
+  gap: 5px;
+}
+
+.over-ball {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ddd;
+  border: 2px solid white;
+}
+
+.over-ball.completed {
+  background-color: green;
+}
+
+.over-ball.pending {
+  background-color: red;
+}
+
 /* Footer */
 footer {
   text-align: center;
@@ -84,4 +122,25 @@ footer {
 footer p {
   margin: 0;
   font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  table {
+    font-size: 0.8rem;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  .bowler-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .bowler-info {
+    margin-bottom: 10px;
+  }
 }
