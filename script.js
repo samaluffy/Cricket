@@ -1,4 +1,4 @@
-const SHEET_ID = "14T-ddsNQGLZoWcBoh5_P7F5j1PdAxVxOxfjxqjtpjqo"; // Replace with your actual sheet ID
+const SHEET_ID = "1At3qrKeciR4cvyKOdtf7tlllxb2Fe-sQ1oLPk6cJ4is"; // New Sheet ID
 const API_KEY = "AIzaSyBRo1I7a8f0c05ym2XHMWlxvBKvedNnbkI"; // Replace with your actual API key
 
 // Define ranges for Live Scores and Upcoming Matches
