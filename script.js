@@ -2,7 +2,7 @@ const SHEET_ID = "1At3qrKeciR4cvyKOdtf7tlllxb2Fe-sQ1oLPk6cJ4is"; // New Sheet ID
 const API_KEY = "AIzaSyBRo1I7a8f0c05ym2XHMWlxvBKvedNnbkI"; // Replace with your actual API key
 
 // Define ranges for Live Scores and Upcoming Matches
-const LIVE_SCORES_RANGE = "Live Scores!A1:D10"; // Adjust as per your range
+const LIVE_SCORES_RANGE = "LiveScores!A1:D10"; // Adjust as per your range
 const UPCOMING_MATCHES_RANGE = "Upcoming Matches!A1:D10"; // Adjust as per your range
 
 // URLs for each range
