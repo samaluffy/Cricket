@@ -1,97 +1,67 @@
-const SHEET_ID = "14T-ddsNQGLZoWcBoh5_P7F5j1PdAxVxOxfjxqjtpjqo"; // Your Google Sheet ID
-const API_KEY = "AIzaSyBRo1I7a8f0c05ym2XHMWlxvBKvedNnbkI"; // Your API Key
-const SHEET_NAMES = ["Live Scores", "Upcoming Matches", "News"]; // Names of your sheets
-const POLL_INTERVAL = 10000; // Fetch data every 10 seconds
+const SHEET_ID = "14T-ddsNQGLZoWcBoh5_P7F5j1PdAxVxOxfjxqjtpjqo";
+const API_KEY = "AIzaSyBRo1I7a8f0c05ym2XHMWlxvBKvedNnbkI";
 
-// Fetch data from Google Sheet
-async function fetchData() {
+// Define ranges for Live Scores and Upcoming Matches
+const LIVE_SCORES_RANGE = "Live Scores!A1:D10";
+const UPCOMING_MATCHES_RANGE = "Upcoming Matches!A1:D10";
+
+// URLs for each range
+const liveScoresURL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${LIVE_SCORES_RANGE}?key=${API_KEY}`;
+const upcomingMatchesURL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${UPCOMING_MATCHES_RANGE}?key=${API_KEY}`;
+
+// Fetch and display Live Scores
+async function fetchLiveScores() {
   try {
-    const responses = await Promise.all(
-      SHEET_NAMES.map((sheetName) =>
-        fetch(
-          `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheetName}?key=${API_KEY}`
-        ).then((response) => {
-          if (!response.ok) {
-            throw new Error(`Failed to fetch ${sheetName}: ${response.statusText}`);
-          }
-          return response.json();
-        })
-      )
-    );
-
-    console.log("API Responses:", responses); // Log the API responses
-
-    const data = {
-      liveScores: responses[0].values.slice(1), // Remove header row
-      upcomingMatches: responses[1].values.slice(1), // Remove header row
-      news: responses[2].values.slice(1), // Remove header row
-    };
-
-    return data;
+    const response = await fetch(liveScoresURL);
+    if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+    
+    const data = await response.json();
+    displayData(data.values, "liveScores");
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("Error fetching live scores:", error);
+    document.getElementById("liveScores").innerHTML = "Failed to load live scores.";
   }
 }
 
-// Function to display live scores
-function displayLiveScores(liveScores) {
-  const liveScoreContainer = document.getElementById("live-score-container");
-  liveScoreContainer.innerHTML = liveScores
-    .map(
-      (score) => `
-      <div class="score-card">
-        <h3>${score[0]}</h3>
-        <p>${score[1]}</p>
-        <p><strong>Status:</strong> ${score[2]}</p>
-      </div>
-    `
-    )
-    .join("");
-}
-
-// Function to display upcoming matches
-function displayUpcomingMatches(upcomingMatches) {
-  const upcomingMatchesContainer = document.getElementById("upcoming-matches-container");
-  upcomingMatchesContainer.innerHTML = upcomingMatches
-    .map(
-      (match) => `
-      <div class="match-card">
-        <h3>${match[0]}</h3>
-        <p><strong>Date:</strong> ${match[1]}</p>
-        <p><strong>Venue:</strong> ${match[2]}</p>
-      </div>
-    `
-    )
-    .join("");
-}
-
-// Function to display news
-function displayNews(news) {
-  const newsContainer = document.getElementById("news-container");
-  newsContainer.innerHTML = news
-    .map(
-      (item) => `
-      <div class="news-card">
-        <h3>${item[0]}</h3>
-        <p>${item[1]}</p>
-      </div>
-    `
-    )
-    .join("");
-}
-
-// Initialize the app
-async function init() {
-  const data = await fetchData();
-  if (data) {
-    displayLiveScores(data.liveScores);
-    displayUpcomingMatches(data.upcomingMatches);
-    displayNews(data.news);
+// Fetch and display Upcoming Matches
+async function fetchUpcomingMatches() {
+  try {
+    const response = await fetch(upcomingMatchesURL);
+    if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+    
+    const data = await response.json();
+    displayData(data.values, "upcomingMatches");
+  } catch (error) {
+    console.error("Error fetching upcoming matches:", error);
+    document.getElementById("upcomingMatches").innerHTML = "Failed to load upcoming matches.";
   }
 }
 
-// Poll data at regular intervals
-setInterval(init, POLL_INTERVAL);
+// Display data in a table format
+function displayData(data, containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = "";
 
-// Run the app on page load
-init();
+  // Create a table
+  const table = document.createElement("table");
+  table.style.border = "1px solid #000";
+  table.style.borderCollapse = "collapse";
+
+  data.forEach((row) => {
+    const rowElement = document.createElement("tr");
+    row.forEach((cell) => {
+      const cellElement = document.createElement("td");
+      cellElement.textContent = cell;
+      cellElement.style.border = "1px solid #000";
+      cellElement.style.padding = "8px";
+      rowElement.appendChild(cellElement);
+    });
+    table.appendChild(rowElement);
+  });
+
+  container.appendChild(table);
+}
+
+// Fetch data on page load
+fetchLiveScores();
+fetchUpcomingMatches();
